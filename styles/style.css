@@ -1,5 +1,368 @@
-/* Основные стили проекта. Это стили для темы, которую вы верстаете первой. */
+body {
+  min-inline-size: 375px;
+  max-inline-size: 1440px;
+  margin: 0 auto;
+}
 
 .page {
-  /* сохраните в разметке и стилях класс page у тега body. Он удобен, чтобы составлять селекторы для разных цветовых тем. */
+  color: var(--text-color);
+  background-color: var(--page-background);
+  background-image: var(--page-background-image);
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  font-family: var(--main-font);
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.decorated-zone {
+  position: relative;
+  min-block-size: 668px;
+  block-size: 100vh;
+  block-size: 100svh;
+  padding: var(--page-padding);
+}
+
+.decorated-zone::before,
+.decorated-zone::after {
+  position: absolute;
+  inline-size: 25px;
+  block-size: 25px;
+  content: "";
+  pointer-events: none;
+}
+
+.decorated-zone::before {
+  inset-block-start: var(--page-padding);
+  inset-inline-end: var(--page-padding);
+  border-block-start: 1px solid var(--accent-color);
+  border-inline-end: 1px solid var(--accent-color);
+}
+
+.decorated-zone::after {
+  inset-block-end: var(--page-padding);
+  inset-inline-start: var(--page-padding);
+  border-block-end: 1px solid var(--accent-color);
+  border-inline-start: 1px solid var(--accent-color);
+}
+
+.header {
+  display: grid;
+  grid-template-rows: 1fr min-content 1fr;
+  align-items: center;
+  gap: 55px;
+  padding-block: 10px;
+}
+
+.header__rec {
+  position: absolute;
+  inset-block-start: 10px;
+  inset-inline-end: 38px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--accent-color);
+  line-height: 1;
+}
+
+.header__rec::after {
+  inline-size: 9px;
+  block-size: 9px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  box-shadow: 0 0 4px 2px var(--accent-color);
+  content: "";
+}
+
+.header__theme-menu {
+  justify-self: end;
+  align-self: center;
+  margin-block-start: 10px;
+}
+
+.header__theme-menu-list {
+  display: grid;
+  gap: 10px;
+}
+
+.header__theme-menu-button {
+  min-inline-size: 70px;
+  padding: 1px 13px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--accent-color);
+  font-size: 18px;
+  line-height: 1;
+  text-align: center;
+  text-transform: lowercase;
+}
+
+.header__theme-menu-button:hover {
+  border-color: color-mix(in srgb, var(--accent-color) 40%, transparent);
+}
+
+.header__theme-menu-button:focus-visible {
+  outline: none;
+  border-block-end-color: var(--accent-color);
+}
+
+.header__theme-menu-button_active {
+  border-color: var(--accent-color);
+  pointer-events: none;
+}
+
+.header__title,
+.footer__title {
+  color: var(--header-title-color, var(--title-color));
+  font-size: clamp(7.25rem, 7.0115rem + 1.0178vw, 7.5rem);
+  font-weight: 700;
+  line-height: 0.83;
+  text-shadow: 4px 4px 0 var(--shadow-color);
+}
+
+.header__title {
+  justify-self: start;
+  margin-inline-start: -2px;
+}
+
+.header__description {
+  justify-self: end;
+  align-self: center;
+  max-inline-size: 100%;
+  font-weight: 700;
+}
+
+.title-decor {
+  color: var(--title-color);
+  background-color: var(--title-background);
+  font-weight: 700;
+}
+
+.main {
+  display: grid;
+  gap: 50px;
+  padding: 40px var(--page-padding);
+}
+
+.content-section {
+  display: grid;
+  gap: 20px;
+}
+
+.section-title {
+  color: var(--section-title-color);
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.section-content {
+  display: grid;
+  gap: 20px;
+}
+
+.content-card {
+  display: grid;
+  gap: 10px;
+}
+
+.card-title {
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.card-title_regular {
+  font-weight: 400;
+}
+
+.card-text {
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.card-text a {
+  text-decoration: none;
+  text-shadow: 2px 2px 0 var(--shadow-color);
+}
+
+.card-text a:hover {
+  border-block-end: 1px solid currentColor;
+}
+
+.card-text a:focus-visible {
+  outline: 1px solid currentColor;
+}
+
+.gallery {
+  display: grid;
+  gap: 10px;
+}
+
+.gallery__image {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.footer {
+  display: grid;
+  place-items: center;
+}
+
+.footer__title {
+  font-size: clamp(7.25rem, 7.0115rem + 1.0178vw, 7.5rem);
+}
+
+
+@media (width >= 768px) {
+  :root {
+    --page-padding: 20px;
+  }
+
+  .decorated-zone {
+    min-block-size: 768px;
+    padding: 20px;
+  }
+
+  .header {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr auto 1fr;
+    gap: 0;
+  }
+
+  .header__theme-menu {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    margin-block-start: 0;
+  }
+
+  .header__title {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    font-size: clamp(7.5rem, 0.5625rem + 14.4531vw, 9.8125rem);
+  }
+
+  .header__description {
+    grid-column: 2;
+    grid-row: 3;
+    max-inline-size: 100%;
+  }
+
+  .header__rec {
+    inset-block-start: 20px;
+    inset-inline-end: 48px;
+  }
+
+  .main {
+    gap: 80px;
+    padding: 60px 20px;
+  }
+
+  .content-section {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: 20px;
+  }
+
+  .content-section__advice .section-content,
+  .content-section__tips .section-content {
+    grid-column: 2;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .gallery__image_sunset {
+    grid-column: span 2;
+  }
+
+  .gallery__image_ice-cream {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+  }
+
+  .gallery__image_tape {
+    grid-column: 1;
+    grid-row: 2 / span 2;
+  }
+
+  .gallery__image_books {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .gallery__image_street {
+    grid-column: 2 / span 2;
+    grid-row: 3;
+  }
+
+  .footer {
+    min-block-size: 768px;
+  }
+
+  .footer__title {
+    font-size: clamp(7.5rem, 0.5625rem + 14.4531vw, 9.8125rem);
+  }
+}
+
+@media (width >= 1024px) {
+  .header__theme-menu {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    justify-self: center;
+    align-self: start;
+  }
+
+  .header__theme-menu-list {
+    display: flex;
+    gap: 10px;
+  }
+
+  .header__title {
+    grid-row: 2;
+  }
+
+  .header__description {
+    grid-column: 2;
+    max-inline-size: 100%;
+  }
+
+  .content-section__reasons .section-content,
+  .content-section__advice .section-content {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .content-section__reasons .section-title,
+  .content-section__advice .section-title,
+  .content-section__tips .section-title {
+    grid-column: 1;
+  }
+
+  .content-section__reasons .section-title {
+    grid-row: 1;
+  }
+
+  .content-section__advice .section-content,
+  .content-section__tips .section-content {
+    grid-column: 2;
+  }
+
+  .content-section__tips .section-content {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .content-section__tips .tips-title {
+    grid-column: 1;
+    margin-block-end: 10px;
+  }
+
+  .content-section__tips .content-card {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
 }

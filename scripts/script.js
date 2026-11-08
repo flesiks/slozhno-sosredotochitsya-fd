@@ -1,52 +1,46 @@
-(function initTheme() {
-  const theme = localStorage.getItem('theme');
-  if (theme) {
-    setTheme(theme);
-  }
-})();
+(() => {
+  const root = document.documentElement;
+  const buttons = [...document.querySelectorAll(".header__theme-menu-button")];
+  const storageKey = "theme";
 
-document.addEventListener('DOMContentLoaded', () => {
-  const currentTheme = [...document.documentElement.classList]
-    .find((cn) => cn.startsWith('theme-'))
-    ?.replace('theme-', '');
-  const themeButtons = [
-    ...document.querySelectorAll('.header__theme-menu-button'),
-  ];
-  setActiveButton(themeButtons, currentTheme);
+  const getSavedTheme = () => {
+    try {
+      return localStorage.getItem(storageKey);
+    } catch {
+      return null;
+    }
+  };
 
-  themeButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const chosenTheme = [...button.classList]
-        .find((cn) => cn.includes('_type_'))
-        .split('_type_')[1];
-      setTheme(chosenTheme);
-      setActiveButton(themeButtons, chosenTheme);
+  const setTheme = (theme) => {
+    root.classList.remove("theme-light", "theme-dark", "theme-auto");
+    if (theme !== "auto") {
+      root.classList.add(`theme-${theme}`);
+    }
+    try {
+      localStorage.setItem(storageKey, theme);
+    } catch {
+      // Страница продолжит работать, даже если localStorage недоступен.
+    }
+    setActiveButton(theme);
+  };
+
+  const setActiveButton = (theme) => {
+    buttons.forEach((button) => {
+      const isActive = button.classList.contains(`header__theme-menu-button_type_${theme}`);
+      button.classList.toggle("header__theme-menu-button_active", isActive);
+      button.disabled = isActive;
+    });
+  };
+
+  const savedTheme = getSavedTheme();
+  const initialTheme = ["light", "dark", "auto"].includes(savedTheme) ? savedTheme : "auto";
+  setTheme(initialTheme);
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const themeClass = [...button.classList].find((className) => className.includes("_type_"));
+      const theme = themeClass.split("_type_")[1];
+      setTheme(theme);
     });
   });
-});
-
-function setTheme(theme) {
-  document.documentElement.className = '';
-  document.documentElement.classList.add(`theme-${theme}`);
-  localStorage.setItem('theme', theme);
-}
-
-function setActiveButton(buttonsArray, theme) {
-  buttonsArray.forEach((button) => {
-    button.classList.remove('header__theme-menu-button_active');
-    button.removeAttribute('disabled');
-  });
-  const target = buttonsArray.find((button) =>
-    button.classList.contains(`header__theme-menu-button_type_${theme}`)
-  );
-  if (target) {
-    target.classList.add('header__theme-menu-button_active');
-    target.setAttribute('disabled', true);
-  } else {
-    const autoButton = document.querySelector(
-      '.header__theme-menu-button_type_auto'
-    );
-    autoButton.classList.add('header__theme-menu-button_active');
-    autoButton.setAttribute('disabled', true);
-  }
-}
+})();
